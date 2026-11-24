@@ -35,4 +35,52 @@ SET final_payable = subtotal * (1 - discount)
 PRINT invoice statement
 
 7. Python Source Code:
+# Hospital Billing and Patient Classification System
+patient_name = "Robert Smith"
+patient_age = 65
+consultation_fee = 150.0
+diagnostic_fee = 300.0
+treatment_fee = 1200.0
+
+# Compute subtotal
+subtotal_charges = consultation_fee + diagnostic_fee + treatment_fee
+
+# Conditional age concession and patient classification
+if patient_age >= 60:
+    discount_rate = 0.15
+    patient_tier = "Senior Concession Tier"
+else:
+    discount_rate = 0.0
+    patient_tier = "Standard General Tier"
+
+# Calculate final payable amount
+discount_amount = subtotal_charges * discount_rate
+final_payable = subtotal_charges - discount_amount
+
+print("========================================")
+print("     HOSPITAL BILLING STATEMENT         ")
+print("========================================")
+print(f"Patient Name         : {patient_name}")
+print(f"Age                  : {patient_age} years")
+print(f"Patient Classification: {patient_tier}")
+print(f"Subtotal Charges     : ${subtotal_charges:.2f}")
+print(f"Concession Applied   : {discount_rate * 100}% (${discount_amount:.2f})")
+print(f"Final Payable Amount : ${final_payable:.2f}")
 --------------------------------------------------
+
+8. Test Cases:
+- Test Case 1: Robert Smith, Age 65, Subtotal $1650 -> Final Payable: $1402.50[cite: 1].
+
+9. Output Screenshots (Simulated):
+========================================
+     HOSPITAL BILLING STATEMENT         
+========================================
+Patient Name         : Robert Smith
+Age                  : 65 years
+Patient Classification: Senior Concession Tier
+Subtotal Charges     : $1650.00
+Concession Applied   : 15.0% ($247.50)
+Final Payable Amount : $1402.50
+
+10. Conclusion:
+Successfully processed medical charges and applied demographic concessions using conditional branching[cite: 1].
