@@ -1,3 +1,5 @@
+electricity bill payment 
+
 n = int(input("Enter number of months to analyze: "))
 units_list = []
 bills = []
