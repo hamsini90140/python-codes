@@ -1,52 +1,50 @@
-# Case Study 2: Progressive Electricity Billing
-monthly_units = [
-    ("Jan", 120),
-    ("Feb", 135),
-    ("Mar", 260),
-    ("Apr", 140),
-]
+n = int(input("Enter number of months to analyze: "))
+units_list = []
+bills = []
 
-fixed_charge = 100.0
-surcharge_rate = 0.05      # 5% surcharge on energy + fixed
-rebate_low_usage = 50.0    # Rs 50 rebate if units <= 150
-spike_threshold = 0.30     # Flag if bill increases by > 30% over previous month
+for i in range(n):
+    units = int(input(f"Enter units consumed in Month {i + 1}: "))
+    while units < 0:
+        print("Invalid input. Units cannot be negative.")
+        units = int(input(f"Re-enter units consumed in Month {i + 1}: "))
 
-bills = []  # List of tuples: (month, units, total_bill)
+    # Progressive slab calculation
+    if units <= 100:
+        energy_charge = units * 3.0
+    elif units <= 200:
+        energy_charge = (100 * 3.0) + ((units - 100) * 5.0)
+    else:
+        energy_charge = (100 * 3.0) + (100 * 5.0) + ((units - 200) * 8.0)
 
-for month, units in monthly_units:
-    energy_charge = 0.0
-    remaining = units
+    # Rebate and surcharge calculation
+    if units <= 100:
+        adjustment = -0.05 * energy_charge
+    elif units > 300:
+        adjustment = 0.10 * energy_charge
+    else:
+        adjustment = 0.0
 
-    # Slab 1: first 100 units @ Rs 3.00
-    if remaining > 0:
-        slab1 = min(remaining, 100)
-        energy_charge += slab1 * 3.0
-        remaining -= slab1
+    fixed_charge = 50.0
+    total_bill = energy_charge + adjustment + fixed_charge
 
-    # Slab 2: next 100 units (101-200) @ Rs 4.50
-    if remaining > 0:
-        slab2 = min(remaining, 100)
-        energy_charge += slab2 * 4.5
-        remaining -= slab2
+    units_list.append(units)
+    bills.append(total_bill)
 
-    # Slab 3: above 200 units @ Rs 6.50
-    if remaining > 0:
-        energy_charge += remaining * 6.5
+print("\n--- Monthly Electricity Bill Summary ---")
+for i in range(n):
+    print(f"Month {i + 1}: Units = {units_list[i]} | Total Bill = Rs. {bills[i]:.2f}")
 
-    subtotal = energy_charge + fixed_charge
-    surcharge = subtotal * surcharge_rate
-    rebate = rebate_low_usage if units <= 150 else 0.0
-    total_bill = round(subtotal + surcharge - rebate, 2)
+print("\n--- Month-over-Month Spike Analysis ---")
+spike_found = False
+for i in range(1, n):
+    if bills[i - 1] > 0:
+        pct_change = ((bills[i] - bills[i - 1]) / bills[i - 1]) * 100
+        if pct_change > 30.0:
+            print(
+                f"ALERT: Month {i + 1} bill (Rs. {bills[i]:.2f}) increased by "
+                f"{pct_change:.1f}% compared to Month {i} (Rs. {bills[i - 1]:.2f})."
+            )
+            spike_found = True
 
-    bills.append((month, units, total_bill))
-
-print("=== Monthly Electricity Bills ===")
-for i in range(len(bills)):
-    month, units, bill = bills[i]
-    status = "Normal"
-    if i > 0:
-        prev_bill = bills[i - 1][2]
-        pct_change = (bill - prev_bill) / prev_bill if prev_bill > 0 else 0.0
-        if pct_change > spike_threshold:
-            status = f"UNUSUAL INCREASE (+{pct_change * 100:.1f}%)"
-    print(f"{month}: {units} units -> Rs. {bill:.2f} | {status}")
+if not spike_found:
+    print("No unusual bill increases (>30%) detected.")
