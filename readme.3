@@ -1,0 +1,38 @@
+
+CASE STUDY 3: Hospital Billing and Patient Classification
+
+1. Problem Statement:
+Process consultation, diagnostic, and treatment charges, apply conditional concessions, validate billing constraints, and classify patients according to a supplied payment policy[cite: 1].
+
+2. Objectives:
+Automate medical billing calculations and patient tier classification based on demographic concessions[cite: 1].
+
+3. Assumptions:
+Senior citizens (age 60 and above) receive a 15% concession discount on total hospital charges[cite: 1].
+
+4. Algorithm:
+Step 1: Input patient details including name, age, consultation fee, diagnostic fee, and treatment fee[cite: 1].
+Step 2: Calculate the subtotal by summing up all individual fees[cite: 1].
+Step 3: Use a conditional statement to check if age is >= 60[cite: 1].
+Step 4: Apply a 15% discount multiplier if the condition is true; otherwise, keep the discount at 0%[cite: 1].
+Step 5: Compute final net payable amount and assign patient classification tier[cite: 1].
+Step 6: Print detailed hospital invoice statement[cite: 1].
+
+5. Flowchart (Textual):
+Start -> Input Patient Details -> Sum Charges (Subtotal) -> Check Age >= 60 -> [True: Apply 15% Discount / False: No Discount] -> Calculate Final Bill -> Determine Patient Tier -> Print Invoice -> End.
+
+6. Pseudocode:
+READ patient_name, age, consultation, diagnostic, treatment
+SET subtotal = consultation + diagnostic + treatment
+IF age >= 60:
+    SET discount = 0.15
+    SET classification = "Senior Concession Tier"
+ELSE:
+    SET discount = 0.0
+    SET classification = "Standard General Tier"
+ENDIF
+SET final_payable = subtotal * (1 - discount)
+PRINT invoice statement
+
+7. Python Source Code:
+--------------------------------------------------
