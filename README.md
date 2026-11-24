@@ -29,7 +29,7 @@ Sort eligible_list by marks DESC, attendance DESC
 PRINT eligible_list
 
 7. Python Source Code:
---------------------------------------------------
+
 applicants = [
     ("Alice", 88, 65, 82, 45000),
     ("Bob", 92, 70, 90, 48000),
